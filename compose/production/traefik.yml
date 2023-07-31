@@ -1,0 +1,67 @@
+global:
+  sendAnonymousUsage: false
+  checkNewVersion: false
+
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: ":443"
+  flower:
+    address: ":5555"
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+  file:
+    directory: "/etc/traefik/dynamic"
+    watch: true
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: "/etc/traefik/acme/acme.json"
+      # caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"  # Staging server
+      # caServer: "https://acme-v02.api.letsencrypt.org/directory"  # Used by default
+      tlsChallenge: true
+      # keyType: EC256  # Allow value 'EC256', 'EC384', 'RSA2048', 'RSA4096', 'RSA8192'
+      # httpChallenge:
+      #   entryPoint: web
+
+log:
+  filePath: "/var/log/traefik/applog.log"
+  # format: json
+  level: INFO
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  # format: json
+  # filters:
+  #   statusCodes:
+  #     - "200"
+  #     - "300-302"
+  #   retryAttempts: true
+  #   minDuration: "10ms"
+  fields:
+    defaultMode: keep
+    # names:
+    #   ClientUsername: drop
+    headers:
+      defaultMode: keep
+      names:
+          User-Agent: keep
+          Authorization: drop
+          Content-Type: keep
+
+# pilot:
+#   token: ""
+#   dashboard: true

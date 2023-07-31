@@ -1,0 +1,73 @@
+global:
+  sendAnonymousUsage: false
+  checkNewVersion: false
+
+serversTransport:
+  insecureSkipVerify: true
+
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+    # Редирект
+    # http:
+    #   redirections:
+    #     entryPoint:
+    #       to: websecure
+    #       scheme: https
+
+  websecure:
+    address: ":443"
+
+  flower:
+    address: ':5555'
+
+  mailhog:
+    address: ':8025'
+
+  hmr:
+    address: ':24678'
+
+  postgres:
+    address: ':5432'
+
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+  # https://docs.traefik.io/master/providers/file/
+  file:
+    directory: "/etc/traefik/dynamic"
+    watch: true
+
+# TODO: сделать ротацию логов с logrotate
+log: {}
+accessLog: {}
+
+# log:
+#   filePath: "/var/log/traefik/applog.log"
+#   level: INFO
+
+# accessLog:
+#   filePath: "/var/log/traefik/access.log"
+#   # format: json
+#   # filters:
+#   #   statusCodes:
+#   #     - "200"
+#   #     - "300-302"
+#   #   retryAttempts: true
+#   #   minDuration: "10ms"
+#   fields:
+#     defaultMode: keep
+#     # names:
+#     #   ClientUsername: drop
+#     headers:
+#       defaultMode: keep
+#       names:
+#           User-Agent: keep
+#           Authorization: drop
+#           Content-Type: keep

@@ -1,0 +1,46 @@
+version: '3.9'
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  traefik:
+    build:
+      context: ./traefik
+    container_name: traefik
+    security_opt:
+      - no-new-privileges:true
+    command:
+        - --certificatesresolvers.letsencrypt.acme.email=${EMAIL}
+        # - --pilot.token=${PILOT_TOKEN}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5555:5555"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_data:/etc/traefik/acme:z
+      - ./logs:/var/log/traefik
+      - ./compose/production/traefik.yml:/etc/traefik/traefik.yml
+      - ./compose/production/dynamic:/etc/traefik/dynamic
+      - /etc/localtime:/etc/localtime:ro
+    env_file: .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=global"
+      # Secure Dashboard (http basic auth)
+      - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth@file"
+      # Dashboard auth
+      # - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_LOG_PSW}"
+    restart: unless-stopped
+    networks:
+      - global
+
+volumes:
+  traefik_data: {}
+
+networks:
+  global:
+    name: global
