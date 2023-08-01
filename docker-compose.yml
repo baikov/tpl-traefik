@@ -4,8 +4,8 @@ name: ${COMPOSE_PROJECT_NAME}
 services:
   traefik:
     build:
-      context: ./traefik
-    container_name: traefik
+      context: ./compose/production
+    container_name: ${COMPOSE_PROJECT_NAME}_traefik
     security_opt:
       - no-new-privileges:true
     command:
