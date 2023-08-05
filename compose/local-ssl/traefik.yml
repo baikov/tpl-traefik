@@ -2,13 +2,25 @@ global:
   sendAnonymousUsage: false
   checkNewVersion: false
 
+# Disables SSL certificate verification. This means
+# that certificate does not need to be a valid one.
+serversTransport:
+  insecureSkipVerify: true
+
 api:
-  insecure: true
   dashboard: true
 
 entryPoints:
   web:
     address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: ":443"
 
   flower:
     address: ':5555'
@@ -21,7 +33,6 @@ entryPoints:
 
   postgres:
     address: ':5432'
-
 
 providers:
   docker:

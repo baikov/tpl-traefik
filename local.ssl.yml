@@ -1,0 +1,41 @@
+version: '3.9'
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  traefik:
+    build:
+      context: ./compose/local
+    container_name: ${COMPOSE_PROJECT_NAME}_traefik
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - '0.0.0.0:80:80'  # Nuxt and Django on /api
+      - '0.0.0.0:443:443'  # TLS
+      - '0.0.0.0:5555:5555'  # Flower
+      - '0.0.0.0:8025:8025'  # MailHog
+      - '0.0.0.0:24678:24678'  # Nuxt HMR
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./logs:/var/log/traefik
+      - ./compose/local-ssl/traefik.yml:/etc/traefik/traefik.yml
+      - ./compose/local-ssl/dynamic:/etc/traefik/dynamic
+      - ./compose/local-ssl/certs:/etc/certs:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file: .env
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-proxy"
+      # Secure Dashboard (http basic auth)
+      - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+      # Dashboard auth ()
+      # - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_LOG_PSW}"
+    networks:
+      - dev-proxy
+
+networks:
+  dev-proxy:
+    name: dev-proxy

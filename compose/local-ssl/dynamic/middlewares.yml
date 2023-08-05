@@ -1,0 +1,34 @@
+http:
+  middlewares:
+    compression: # gzip
+      compress: {}
+
+    security-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        hostsProxyHeaders:
+          - "X-CSRFToken"
+          - "X-Forwarded-Host"
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000  # 315360000
+        forceSTSHeader: true
+        # PermissionsPolicy: "accelerometer=(), gyroscope=(), magnetometer=(), geolocation=(self), microphone=(), camera=(), fullscreen=*, payment=(), usb=(), vr=(), vibrate=(self)"  # fullscreen=*
+        # accessControlAllowMethods:
+        #   - GET
+        #   - OPTIONS
+        #   - PUT
+        accessControlMaxAge: 100
+        addVaryHeader: true
+        customFrameOptionsValue: SAMEORIGIN
+        referrerPolicy: "same-origin"
+
+    # Redirect from www to non-www and http to https
+    # Just for case
+    www-to-nonwww:
+      redirectregex:
+        regex: "^https?://(www.)?(.*)"
+        replacement: "https://$${2}"
+        permanent: true

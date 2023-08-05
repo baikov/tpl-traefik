@@ -10,28 +10,22 @@ services:
       - no-new-privileges:true
     ports:
       - '0.0.0.0:80:80'  # Nuxt and Django on /api
-      - '0.0.0.0:443:443'  # TLS
       - '0.0.0.0:8080:8080'  # for Traefik dashboard
       - '0.0.0.0:5555:5555'  # Flower
       - '0.0.0.0:8025:8025'  # MailHog
       - '0.0.0.0:24678:24678'  # Nuxt HMR
-      # TODO: Настроить доступ к Postgres
+      # TODO: Postgres will works in Traefik 3
       # - '0.0.0.0:5432:5432'  # Postgres
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # - traefik_data:/etc/traefik/acme
       - ./logs:/var/log/traefik
       - ./compose/local/traefik.yml:/etc/traefik/traefik.yml
       - ./compose/local/dynamic:/etc/traefik/dynamic
       - /etc/localtime:/etc/localtime:ro
-      - ./compose/local/certs:/etc/certs:ro
     env_file: .env
     restart: unless-stopped
     networks:
       - dev-proxy
-
-volumes:
-  traefik_data: {}
 
 networks:
   dev-proxy:

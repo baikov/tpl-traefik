@@ -1,0 +1,8 @@
+# Add your local certificate here...
+# cd this/folder
+# mkcert -install
+# mksert "*.domain.local"
+tls:
+  certificates:
+    - certFile: /etc/certs/_wildcard.tpl.local.pem
+      keyFile: /etc/certs/_wildcard.tpl.local-key.pem
