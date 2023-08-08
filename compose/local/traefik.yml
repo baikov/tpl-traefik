@@ -22,6 +22,9 @@ entryPoints:
   postgres:
     address: ':5432'
 
+  docs:
+    address: ':9000'
+
 
 providers:
   docker:
