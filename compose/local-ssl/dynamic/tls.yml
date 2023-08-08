@@ -4,5 +4,5 @@
 # mksert "*.domain.local"
 tls:
   certificates:
-    - certFile: /etc/certs/_wildcard.tpl.local.pem
-      keyFile: /etc/certs/_wildcard.tpl.local-key.pem
+    - certFile: /etc/certs/tpl.local.pem
+      keyFile: /etc/certs/tpl.local-key.pem
