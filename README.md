@@ -13,6 +13,8 @@ Other parts:
 
 ## Global reverse-proxy for local development
 
+> Creates an external network `dev-proxy` to which frontend and backend containers are connected.
+
 ### Mode 1: local development without https
 
 1. Rename `.env.example` to `.env`
@@ -66,9 +68,11 @@ Traefik dashboard is available at: http://localhost:8080/dashboard/#/
 
 Traefik dashboard is available at: https://tr.tpl.local/dashboard/#/
 
-## Production reverse-proxy in Docker
+## Production reverse-proxy in Docker (Mode 3)
 
-> Using this mode assumes that the `your_domain.com` is already bound to your server (`A` records are configured)
+> Using this mode assumes that the `your-domain.com` is already bound to your server (`A` records are configured).
+
+> Creates an external network `global` to which frontend and backend containers are connected.
 
 1. Rename `.env.example` to `.env`
 1. Set project name (the same for Traefik repo, Nuxt repo and Django repo if use all stack)
@@ -79,7 +83,7 @@ Traefik dashboard is available at: https://tr.tpl.local/dashboard/#/
     ```env
     # Mode 3: As reverse-proxy for production
     COMPOSE_FILE=production.yml
-    DOMAIN=your_domain.com
+    DOMAIN=your-domain.com
     EMAIL=emailfor@letsencrypt.com  # for Let's Encrypt resolver
     ```
 1. Run `docker compose build` and `docker compose up -d`
