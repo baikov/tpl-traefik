@@ -81,3 +81,7 @@ Traefik dashboard is available at: https://tr.tpl.local/dashboard/#/
 1. If the domain is correctly bound to the server, the certificate will be issued automatically with Let's Encrypt
 
 Traefik dashboard is available at: https://tr.your_domain.com/dashboard/#/
+
+## Contributing
+
+I made this template for myself, but it's awesom if it helps someone else. The settings are far from ideal, so fell free to make a pull request.
