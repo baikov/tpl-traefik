@@ -22,7 +22,6 @@ services:
       - ./compose/local/traefik.yml:/etc/traefik/traefik.yml
       - ./compose/local/dynamic:/etc/traefik/dynamic
       - /etc/localtime:/etc/localtime:ro
-    env_file: .env
     restart: unless-stopped
     networks:
       - dev-proxy
