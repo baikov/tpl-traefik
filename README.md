@@ -42,7 +42,7 @@ Traefik dashboard is available at: http://localhost:8080/dashboard/#/
 1. Uncomment `Mode 2` block:
     ```env
     # Mode 2: SSL-mode (with custom domain)
-    COMPOSE_FILE=local.yml:ssl.yml
+    COMPOSE_FILE=local.ssl.yml
     DOMAIN=tpl.local
     ```
 1. Add local domain + subdomain for dashboard in `/etc/hosts`:
