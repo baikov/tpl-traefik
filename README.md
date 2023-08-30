@@ -15,12 +15,16 @@ Other parts:
 
 > Creates an external network `dev-proxy` to which frontend and backend containers are connected.
 
+### Preparation
+
+1. Install Docker Desktop
+1. Copy `.env.example` and rename it to `.env` on local machine
+
 ### Mode 1: local development without https
 
-1. Rename `.env.example` to `.env`
 1. Set project name (the same for Traefik repo, Nuxt repo and Django repo if use all stack)
     ```env
-    COMPOSE_PROJECT_NAME=your_proj_name
+    COMPOSE_PROJECT_NAME=example
     ```
 1. Uncomment `Mode 1` block:
     ```env
@@ -34,10 +38,9 @@ Traefik dashboard is available at: http://localhost:8080/dashboard/#/
 
 ### Mode 2: local development with custom domain and https
 
-1. Rename `.env.example` to `.env`
 1. Set project name (the same for Traefik repo, Nuxt repo and Django repo if use all stack)
     ```env
-    COMPOSE_PROJECT_NAME=your_proj_name
+    COMPOSE_PROJECT_NAME=example
     ```
 1. Uncomment `Mode 2` block:
     ```env
@@ -74,10 +77,10 @@ Traefik dashboard is available at: https://tr.tpl.local/dashboard/#/
 
 > Creates an external network `global` to which frontend and backend containers are connected.
 
-1. Rename `.env.example` to `.env`
+1. Copy `.env.example` and rename it to `.env` on production server
 1. Set project name (the same for Traefik repo, Nuxt repo and Django repo if use all stack)
     ```env
-    COMPOSE_PROJECT_NAME=your_proj_name
+    COMPOSE_PROJECT_NAME=example
     ```
 1. Uncomment `Mode 3` block and change domain and email:
     ```env
