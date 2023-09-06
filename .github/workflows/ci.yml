@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout Code Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build the Stack
         run: docker compose -f local.yml --env-file .env.example build
