@@ -36,3 +36,8 @@ http:
       basicAuth:
         users:
           - {{ env "DASHBOARD_LOG_PSW" }}
+
+    dev-auth:
+      basicAuth:
+        users:
+          - {{ env "DEV_LOG_PSW" }}
