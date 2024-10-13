@@ -1,2 +1,2 @@
-FROM traefik:2.11.8
+FROM traefik:3.1.6
 RUN mkdir -p /etc/traefik
